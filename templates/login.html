@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+<script>
+    function myFunction() {
+      var x = document.getElementById("myInput");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+</script>
+    <style>
+         @media only screen and (max-width:450px){
+           
+         }
+         @media only screen and (max-width: 824px) and (min-width:450px){
+           
+         }
+         @media only screen and (min-width: 825px){
+            .log{
+                height: 380px;
+                width: 350px;
+                margin-top: 120px;
+                border-radius: 5%;
+                box-shadow: 0 4px 8px 0 black, 0 6px 20px 0 black;
+             }
+             .txt{
+                height: 30px;
+                width: 250px;
+                margin: 5%;
+                border-radius:30px 30px 30px 30px;
+                background-color: #0070cc7e;
+                border-style: solid ;
+                border-color: #007acc;
+                font-size: 18px;
+                padding: 1% 2% 1% 2%;
+                font-style: inherit;
+                padding-left: 3%;
+             }
+             .no{
+                 background-color: #ffffff;
+                 padding: 10%;
+             }
+             .but{
+                 height:40px;
+                 width: 80px;
+                 border: 0pc;
+                 display: inline-block;
+                 background-color: #007acc;
+                 border-radius: 15px 15px 15px 15px;
+                 color: white;
+             }
+             .txt::placeholder{
+     font-size: 15px;
+     font-family:inherit;
+     color: #61686df3;
+     padding-left: 3%;
+
+}
+         }
+    </style>
+</head><center>
+<body style="background-color: #007acc;">
+    <div   class="log" style="background-color: #ffffff;align-items: center;position: relative;">
+        <img src="\static\images\logo.png" style="height:30px;padding: 40px;">
+     <form action ="http://localhost:5000/login" method="post" style="position: absolute;">
+         <input type="text" class="txt" style="margin-top: 2px;" placeholder="Username" name="Usr" autocomplete="off">
+         <input type="password" class="txt"  placeholder="Password" name="pas" autocomplete="off">
+         
+    
+         <input type="submit" value="Login" class="but" style="margin-top: 33px;margin-left: 170px;" >
+          
+     </form>
+     <form action = "http://localhost:5000/emailop" style="position: absolute;margin-top: 170px;margin-left:50px; ">
+        <input type="submit" value="SignUp" class="but" style="margin-right: 60px;"></form> 
+   
+    </div>
+</body></center>
+</html>
