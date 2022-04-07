@@ -1,20 +1,26 @@
-from re import I
-import pandas as pd
-from flask import *
-from csv import writer
 
+from flask import *
+import mysql.connector
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import random
+DS=mysql.connector.connect(host="localhost",user="root",password="",database="code")
+serv=DS.cursor()
 app=Flask(__name__,template_folder='templates')
+@app.route('/')
+def funn():
+    return render_template("login.html")
 @app.route('/login', methods=['POST','GET']) 
 def fun():
-    
      usr=request.form['Usr']  
      pas=request.form['pas']
-   
-     da=pd.read_csv('data.csv')
-     ur=list(da['Username'])
-     
-     ps=list(map(str,list(da['Password'])))
-   
+     serv.execute("select UserName from UserInf")
+     ur=serv.fetchall()
+     ur=[j for i in ur for j in i]
+     serv.execute("select UsPassword from UserInf")
+     ps=serv.fetchall()
+     ps=[j for i in ps for j in i]
      if usr in ur:
          if pas in ps:
              if(ur.index(usr)==ps.index(pas)):
@@ -25,6 +31,12 @@ def fun():
              return render_template("paserror.html")
      else:
         return render_template("usrerror.html")
+emaill=''
+otp=''
+genotp=''
+@app.route("/email",methods=["POST","GET"])
+def ffff():
+    print("****")
 @app.route('/signupp', methods=['POST','GET']) 
 def ee():
        return render_template("signup.html")
@@ -34,27 +46,25 @@ def fun1():
 @app.route('/er', methods=['POST','GET']) 
 def f():
        return render_template("signup.html")
-
 @app.route('/signup',methods=['POST','GET'])
 def fun2():
      usr=request.form['Usr']  
      pas=request.form['pas']
      con=request.form['con']
-     da=pd.read_csv('data.csv')
-     ur=list(da['Username'])
-    
-     ps=list(map(str,list(da['Password'])))
-     if usr not in ur:
+     serv.execute("select UserName from UserInf")
+     ur=serv.fetchall()
+     ur=[j for i in ur for j in i]
+     serv.execute("select UsPassword from UserInf")
+     ps=serv.fetchall()
+     ps=[j for i in ps for j in i]
+     print(usr,*ur,usr not in ur)
+     if usr not in ur and usr!='':
          if con=='8':
-              l=[]
-              l.append(usr)
-              l.append(pas)
-              print(l)
-              with open('data.csv', 'a') as f_object:
-                    writer_object = writer(f_object)
-                    writer_object.writerow(l)
-                    f_object.close()
-              return render_template("welcome.html") 
+              sql = "INSERT INTO UserInf(UserName,UsPassword) VALUES (%s, %s)"
+              val = (usr,pas)
+              serv.execute(sql, val)
+              DS.commit()
+              return render_template("welcome.html")
          else:
              return render_template("paserror.html")
      else:
